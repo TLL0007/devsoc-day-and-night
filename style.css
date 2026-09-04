@@ -21,3 +21,10 @@ body {
 #night-section {
   display: none;
 }
+
+body.night-mode #day-section {
+  display: none;
+}
+body.night-mode #night-section {
+  display: block;
+}
