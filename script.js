@@ -24,6 +24,13 @@ const notesSection = document.getElementById('notes');
 const lofiButton = document.getElementById('lofi-sounds');
 const lofiAudio = document.getElementById('lofi-audio');
 
+// Timer
+let startingTime = 1500;
+let totalSeconds = startingTime;
+let breakTime = 300;
+let isWorkMode = true;
+let timerInterval = null;
+
 switchButton.addEventListener('click', () => {
     document.body.classList.toggle('night-mode');
 });
@@ -44,4 +51,82 @@ notesButton.addEventListener('click', () => {
   studyView.style.display = 'none';
   todoView.style.display = 'none';
   notesView.style.display = 'block';
+});
+
+function updateDisplay() {
+  let minutes = Math.floor(totalSeconds / 60);
+  let seconds = totalSeconds % 60;
+
+  let formattedMin = String(minutes).padStart(2, '0');
+  let formattedSec = String(seconds).padStart(2, '0');
+
+  pomodoro.textContent = formattedMin + ":" + formattedSec;
+}
+
+startButton.addEventListener('click', () => {
+  if (timerInterval !== null) {
+    return;
+  }
+  
+  timerInterval = setInterval(() => {
+    totalSeconds--;
+    updateDisplay();
+    if (totalSeconds <= 0) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      isWorkMode = !isWorkMode;
+      if (isWorkMode === true) {
+        totalSeconds = startingTime;
+      } else {
+        totalSeconds = breakTime;
+      }
+      updateDisplay();
+    }
+  }, 1000);
+});
+
+pauseButton.addEventListener('click', () => {
+  if (timerInterval === null) {
+    return;
+  }
+  
+  clearInterval(timerInterval);
+  timerInterval = null;
+});
+
+resetButton.addEventListener('click', () => {
+  if (timerInterval !== null) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  if (isWorkMode === true) {
+    totalSeconds = startingTime;
+  } else {
+    totalSeconds = breakTime;
+  }
+  updateDisplay();
+});
+
+addTodoButton.addEventListener('click', () => {
+  const taskText = todoInput.value.trim();
+  if (taskText === '') {
+    return;
+  }
+  const li = document.createElement('li');
+  li.textContent= taskText;
+
+  const completeButton = document.createElement('button');
+  completeButton.textContent = "✓";
+  completeButton.addEventListener('click', () => {
+    li.classList.toggle('completed')
+  })
+  li.appendChild(completeButton);
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = "✕";
+  deleteButton.addEventListener('click', () => {
+    li.remove();
+  })
+  li.appendChild(deleteButton);
+  todoList.appendChild(li);
+  todoInput.value = '';
 });
