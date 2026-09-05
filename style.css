@@ -18,6 +18,18 @@ body {
   display: block;
 }
 
+#study-view {
+  display: none;
+}
+
+#todo-view {
+  display: none;
+}
+
+#notes-view {
+  display: none;
+}
+
 #night-section {
   display: none;
 }
