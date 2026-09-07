@@ -176,6 +176,17 @@ function updateClock() {
 updateClock();
 setInterval(updateClock, 1000);
 
+// Music player
+lofiButton.addEventListener('click', () => {
+  if (lofiAudio.paused === true) {
+    lofiAudio.play();
+    lofiButton.textContent = 'Pause Lofi Music';
+  } else {
+    lofiAudio.pause();
+    lofiButton.textContent = 'Play Lofi Music';
+  }
+})
+
 // Persistence for todo list
 function saveTasks() {
   const tasks = [];
