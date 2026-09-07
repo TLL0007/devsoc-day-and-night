@@ -36,13 +36,27 @@ let timerInterval = null;
 let currentTime = document.getElementById('clock-time');
 let currentDate = document.getElementById('clock-date');
 
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+  document.body.classList.add(savedTheme);
+}
+if (document.body.classList.contains('night-mode')) {
+  greeting.textContent = 'Time to rest and reset 😴';
+} else {
+  greeting.textContent = 'Lock In Time?';
+}
+
 switchButton.addEventListener('click', () => {
     document.body.classList.toggle('night-mode');
+    let themeName;
     if (document.body.classList.contains('night-mode')) {
-      greeting.textContent = 'Time to rest and reset 😴';
+        greeting.textContent = 'Time to rest and reset 😴';
+        themeName = 'night-mode';
     } else {
-      greeting.textContent = 'Lock In Time?';
+        greeting.textContent = 'Lock In Time?';
+        themeName = 'day-mode';
     }
+    localStorage.setItem('theme', themeName)
 });
 
 studyButton.addEventListener('click', () => {
@@ -129,16 +143,19 @@ addTodoButton.addEventListener('click', () => {
   completeButton.textContent = "✓";
   completeButton.addEventListener('click', () => {
     li.classList.toggle('completed')
+    saveTasks();
   })
   li.appendChild(completeButton);
   const deleteButton = document.createElement('button');
   deleteButton.textContent = "✕";
   deleteButton.addEventListener('click', () => {
     li.remove();
+    saveTasks();
   })
   li.appendChild(deleteButton);
   todoList.appendChild(li);
   todoInput.value = '';
+  saveTasks();
 });
 
 function updateClock() {
@@ -158,3 +175,48 @@ function updateClock() {
 
 updateClock();
 setInterval(updateClock, 1000);
+
+// Persistence for todo list
+function saveTasks() {
+  const tasks = [];
+  const items = document.querySelectorAll('li');
+
+  for (const item of items) {
+    tasks.push(item.firstChild.textContent);
+  }
+  localStorage.setItem('tasks', JSON.stringify(tasks))
+}
+
+function loadTasks() {
+  const taskList = JSON.parse(localStorage.getItem('tasks'));
+  for (const task of taskList) {
+    const li = document.createElement('li');
+    li.textContent= task;
+    const completeButton = document.createElement('button');
+    completeButton.textContent = "✓";
+    completeButton.addEventListener('click', () => {
+      li.classList.toggle('completed');
+      saveTasks();
+    });
+    
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = "✕";
+    deleteButton.addEventListener('click', () => {
+      li.remove();
+      saveTasks();
+    });
+    li.appendChild(completeButton);
+    li.appendChild(deleteButton);
+    todoList.appendChild(li);
+  }
+}
+
+loadTasks();
+
+
+// Persistence for notes
+notesSection.value = localStorage.getItem('notes')
+
+notesSection.addEventListener('input', () => {
+  localStorage.setItem('notes', notesSection.value);
+});
