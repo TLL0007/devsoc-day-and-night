@@ -140,3 +140,25 @@ body.night-mode .switch {
   gap: 0.75rem;
   margin-top: 1rem;
 }
+
+.button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid #2c3e50;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-family: inherit;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+body.night-mode .button {
+  border-color: #e8e8ff;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.button:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateY(-5px);
+}
