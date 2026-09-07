@@ -32,6 +32,10 @@ let breakTime = 300;
 let isWorkMode = true;
 let timerInterval = null;
 
+// Time and date
+let currentTime = document.getElementById('clock-time');
+let currentDate = document.getElementById('clock-date');
+
 switchButton.addEventListener('click', () => {
     document.body.classList.toggle('night-mode');
     if (document.body.classList.contains('night-mode')) {
@@ -136,3 +140,21 @@ addTodoButton.addEventListener('click', () => {
   todoList.appendChild(li);
   todoInput.value = '';
 });
+
+function updateClock() {
+  let now = new Date();
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+  let formattedHours = String(hours).padStart(2, '0');
+  let formattedMins = String(minutes).padStart(2, '0');
+  currentTime.textContent = formattedHours + ":" + formattedMins;
+  let formattedDate = now.toLocaleDateString('en-AU', { 
+    weekday: 'long', 
+    month: 'short', 
+    day: 'numeric' 
+  });
+  currentDate.textContent = formattedDate;
+}
+
+updateClock();
+setInterval(updateClock, 1000);
