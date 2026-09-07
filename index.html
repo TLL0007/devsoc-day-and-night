@@ -7,36 +7,39 @@
 </head>
 
 <body>
-    <button id="switch-button">Switch Mode</button>
-    <div id="day-section">
-        <h2>Day Mode</h2>
-        <h1 id="greeting">GOOD MORNING!</h1>
-        <button id="study-button">Study </button>
-        <button id="todo-button">Todo List </button>
-        <button id="notes-button">Quick Notes </button>
-        <div id="study-view">
-            <h1 id="Pomodoro">25:00</h1>
-            <button id="start-button">Start </button>
-            <button id="pause-button">Pause </button>
-            <button id="reset-button">Reset </button>
+    <main class="content">
+        <div class="sun"></div>
+        <h1 id="greeting">Lock In Time?</h1>
+        <button id="switch-button" class="switch" aria-label="Toggle Night Mode">
+            <span class="switch-thumb"></span>
+        </button>
+        <div id="day-section">
+            <div class="nav-menu">
+                <button id="study-button">Study (Pomodoro) </button>
+                <button id="todo-button">Todo List </button>
+                <button id="notes-button">Quick Notes </button>
+            </div>
+            <div id="study-view">
+                <h1 id="Pomodoro">25:00</h1>
+                <button id="start-button">Start </button>
+                <button id="pause-button">Pause </button>
+                <button id="reset-button">Reset </button>
+            </div>
+            <div id="todo-view">
+                <input id="todo-input" placeholder="Add a new task...">
+                <button id="add-todo-button">Add</button>
+                <ul id="todo-list">
+                </ul>
+            </div>
+            <div id="notes-view">
+                <textarea id="notes" placeholder="Write your quick notes here..."></textarea>
+            </div>
         </div>
-        <div id="todo-view">
-            <input id="todo-input" placeholder="Add a new task...">
-            <button id="add-todo-button">Add</button>
-            <ul id="todo-list">
-                
-            </ul>
+        <div id="night-section">
+            <button id="lofi-sounds">Play Lofi Music</button>
+            <audio id="lofi-audio" src="example.mp3" loop></audio> 
         </div>
-        <div id="notes-view">
-            <textarea id="notes" placeholder="Write your quick notes here..."></textarea>
-        </div>
-    </div>
-    <div id="night-section">
-        <h2>Night Mode</h2>
-        <p id="night-quote">Time to rest and reset</p>
-        <button id="lofi-sounds">Play Lofi Music</button>
-        <audio id="lofi-audio" src="example.mp3" loop></audio> 
-    </div>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>

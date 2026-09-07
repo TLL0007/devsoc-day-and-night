@@ -1,6 +1,25 @@
 :root {
-  --bg-color: #449dc9;
-  --text-color: #111111;
+  --sky-top: #87ceeb;
+  --sky-bottom: #fff8dc;
+  --text-color: #2c3e50;
+}
+
+body.night-mode {
+  --sky-top: #0b0e2a;
+  --sky-bottom: #1a1a4e;
+  --text-color: #e8e8ff;
+}
+
+@property --sky-top {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: #87ceeb;
+}
+
+@property --sky-bottom {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: #fff8dc;
 }
 
 body.night-mode {
@@ -9,16 +28,16 @@ body.night-mode {
 }
 
 body {
-  background-color: var(--bg-color);
+  background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
   color: var(--text-color);
-  transition: background-color 0.3s, color 0.3s;
+  transition: --sky-top 0.8s ease, --sky-bottom 0.8s ease, color 0.8s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: 100vh;
+  padding-top: 5vh;
 }
-
 #day-section {
   display: block;
 }
@@ -49,4 +68,75 @@ body.night-mode #night-section {
 .completed {
   text-decoration: line-through;
   opacity: 0.6;
+}
+
+#greeting {
+  margin-top: -1rem; 
+}
+
+h1, h2 {
+  font-family: Georgia, serif;
+  font-size: 2.5rem;
+  font-weight: 700; 
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+}
+
+.sun {
+  width: 120px;
+  height: 120px;
+  background-color: #ffd700;
+  border-radius: 50%;
+  box-shadow: 0 0 60px rgba(255, 215, 0, 0.6); 
+  margin: 0 auto 2rem auto;
+  transition: background-color 0.8s ease, box-shadow 0.8s ease;
+}
+
+body.night-mode .sun {
+  background-color: #e0e6ed;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+}
+
+.switch {
+  width: 80px;
+  height: 40px;
+  border: 3px solid #2c3e50;
+  border-radius: 25px;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+}
+
+.switch-thumb {
+  width: 26px;
+  height: 26px;
+  background-color: #f39c12;
+  border-radius: 50%;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  transition: transform 0.4s ease;
+}
+
+body.night-mode .switch-thumb {
+  transform: translateX(40px);
+}
+
+body.night-mode .switch {
+  border-color: #e8e8ff;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem; 
+}
+
+.nav-menu {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
 }

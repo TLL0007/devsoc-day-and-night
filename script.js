@@ -1,6 +1,7 @@
 const switchButton = document.getElementById('switch-button');
 const daySection = document.getElementById('day-section');
 const nightSection = document.getElementById('night-section');
+const greeting = document.getElementById('greeting');
 // Day section 
 const studyButton = document.getElementById('study-button');
 const todoButton = document.getElementById('todo-button');
@@ -33,6 +34,11 @@ let timerInterval = null;
 
 switchButton.addEventListener('click', () => {
     document.body.classList.toggle('night-mode');
+    if (document.body.classList.contains('night-mode')) {
+      greeting.textContent = 'Time to rest and reset 😴';
+    } else {
+      greeting.textContent = 'Lock In Time?';
+    }
 });
 
 studyButton.addEventListener('click', () => {
