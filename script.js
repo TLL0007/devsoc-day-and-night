@@ -25,6 +25,9 @@ const notesSection = document.getElementById('notes');
 const lofiButton = document.getElementById('lofi-sounds');
 const lofiAudio = document.getElementById('lofi-audio');
 
+// Stars
+const starField = document.querySelector('.star');
+
 // Timer
 let startingTime = 1500;
 let totalSeconds = startingTime;
@@ -187,6 +190,15 @@ lofiButton.addEventListener('click', () => {
   }
 })
 
+// Looping to randomly generate stars
+let stars = "";
+for (let i = 0; i < 50; i++) {
+  let x = Math.floor(Math.random() * window.innerWidth);
+  let y = Math.floor(Math.random() * window.innerHeight);
+  stars += `${x}px ${y}px #fff, `;
+}
+stars = stars.slice(0, -2);
+starField.style.boxShadow = stars;
 // Persistence for todo list
 function saveTasks() {
   const tasks = [];

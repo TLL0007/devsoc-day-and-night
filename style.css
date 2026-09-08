@@ -182,3 +182,12 @@ body.night-mode .button {
   font-size: 0.9rem;
   opacity: 0.8;
 }
+
+.star {
+  width: 2px;
+  height: 2px;
+  background: rgb(255, 255, 255);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
