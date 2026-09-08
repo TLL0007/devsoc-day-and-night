@@ -21,6 +21,11 @@ const todoList = document.getElementById('todo-list');
 // Notes view
 const notesView = document.getElementById('notes-view');
 const notesSection = document.getElementById('notes');
+// Game button
+const gameButton = document.getElementById('prank-button');
+const flash = document.getElementById('flashbang');
+const jobApp = document.getElementById('job-app')
+const prankAudio = document.getElementById('unexpected-audio');
 // Night section 
 const lofiButton = document.getElementById('lofi-sounds');
 const lofiAudio = document.getElementById('lofi-audio');
@@ -178,6 +183,24 @@ function updateClock() {
 
 updateClock();
 setInterval(updateClock, 1000);
+
+gameButton.addEventListener('click', () => {
+  gameButton.disabled = true;
+  flash.classList.add('active');
+  setTimeout(() => {
+    flash.classList.remove('active');
+    jobApp.classList.add('active');
+    setTimeout(() => {
+      jobApp.classList.remove('active');
+    }, 15000);
+  }, 1500);
+  prankAudio.currentTime = 0;
+  prankAudio.play();
+  setTimeout(() => {
+    prankAudio.pause();
+    gameButton.disabled = false;
+  }, 16500)
+})
 
 // Music player
 lofiButton.addEventListener('click', () => {
