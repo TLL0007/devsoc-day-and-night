@@ -191,3 +191,9 @@ body.night-mode .button {
   top: 0px;
   left: 0px;
 }
+
+#footer {
+  position: fixed;
+  bottom: 3px;
+  left: 5px;
+}
