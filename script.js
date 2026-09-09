@@ -1,3 +1,4 @@
+/* DOM elements */
 const switchButton = document.getElementById('switch-button');
 const daySection = document.getElementById('day-section');
 const nightSection = document.getElementById('night-section');
@@ -29,10 +30,13 @@ const prankAudio = document.getElementById('unexpected-audio');
 // Night section 
 const lofiButton = document.getElementById('lofi-sounds');
 const lofiAudio = document.getElementById('lofi-audio');
-
+// Time and date
+let currentTime = document.getElementById('clock-time');
+let currentDate = document.getElementById('clock-date');
 // Stars
 const starField = document.querySelector('.star');
 
+/* States and variables */
 // Timer
 let startingTime = 1500;
 let totalSeconds = startingTime;
@@ -40,20 +44,84 @@ let breakTime = 300;
 let isWorkMode = true;
 let timerInterval = null;
 
-// Time and date
-let currentTime = document.getElementById('clock-time');
-let currentDate = document.getElementById('clock-date');
+/* Helper Functions */
+function updateDisplay() {
+  let minutes = Math.floor(totalSeconds / 60);
+  let seconds = totalSeconds % 60;
 
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme) {
-  document.body.classList.add(savedTheme);
-}
-if (document.body.classList.contains('night-mode')) {
-  greeting.textContent = 'Time to rest and reset 😴';
-} else {
-  greeting.textContent = 'Lock In Time?';
+  let formattedMin = String(minutes).padStart(2, '0');
+  let formattedSec = String(seconds).padStart(2, '0');
+
+  pomodoro.textContent = formattedMin + ":" + formattedSec;
 }
 
+function updateClock() {
+  let now = new Date();
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+  let formattedHours = String(hours).padStart(2, '0');
+  let formattedMins = String(minutes).padStart(2, '0');
+  currentTime.textContent = formattedHours + ":" + formattedMins;
+  let formattedDate = now.toLocaleDateString('en-AU', { 
+    weekday: 'long', 
+    month: 'short', 
+    day: 'numeric' 
+  });
+  currentDate.textContent = formattedDate;
+}
+
+// Function to randomly generate stars
+function generateStars () {
+  let stars = "";
+  for (let i = 0; i < 50; i++) {
+    let x = Math.floor(Math.random() * window.innerWidth);
+    let y = Math.floor(Math.random() * window.innerHeight);
+    stars += `${x}px ${y}px #fff, `;
+  }
+  starField.style.boxShadow = stars.slice(0, -2);
+}
+
+// Persistence for todo list
+function saveTasks() {
+  const tasks = [];
+  const items = document.querySelectorAll('li');
+
+  for (const item of items) {
+    tasks.push(item.firstChild.textContent);
+  }
+  localStorage.setItem('tasks', JSON.stringify(tasks))
+}
+
+function loadTasks() {
+  const taskList = JSON.parse(localStorage.getItem('tasks'));
+  if (taskList === null) {
+    return;
+  }
+  for (const task of taskList) {
+    const li = document.createElement('li');
+    li.textContent= task;
+    const completeButton = document.createElement('button');
+    completeButton.textContent = "✓";
+    completeButton.classList.add('item-button');
+    completeButton.addEventListener('click', () => {
+      li.classList.toggle('completed');
+      saveTasks();
+    });
+    
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = "✕";
+    deleteButton.classList.add('item-button');
+    deleteButton.addEventListener('click', () => {
+      li.remove();
+      saveTasks();
+    });
+    li.appendChild(completeButton);
+    li.appendChild(deleteButton);
+    todoList.appendChild(li);
+  }
+}
+
+/* Event Listeners */
 switchButton.addEventListener('click', () => {
     document.body.classList.toggle('night-mode');
     let themeName;
@@ -85,15 +153,6 @@ notesButton.addEventListener('click', () => {
   notesView.style.display = 'block';
 });
 
-function updateDisplay() {
-  let minutes = Math.floor(totalSeconds / 60);
-  let seconds = totalSeconds % 60;
-
-  let formattedMin = String(minutes).padStart(2, '0');
-  let formattedSec = String(seconds).padStart(2, '0');
-
-  pomodoro.textContent = formattedMin + ":" + formattedSec;
-}
 
 startButton.addEventListener('click', () => {
   if (timerInterval !== null) {
@@ -149,6 +208,7 @@ addTodoButton.addEventListener('click', () => {
 
   const completeButton = document.createElement('button');
   completeButton.textContent = "✓";
+  completeButton.classList.add('item-button');
   completeButton.addEventListener('click', () => {
     li.classList.toggle('completed')
     saveTasks();
@@ -156,6 +216,7 @@ addTodoButton.addEventListener('click', () => {
   li.appendChild(completeButton);
   const deleteButton = document.createElement('button');
   deleteButton.textContent = "✕";
+  deleteButton.classList.add('item-button');
   deleteButton.addEventListener('click', () => {
     li.remove();
     saveTasks();
@@ -165,24 +226,6 @@ addTodoButton.addEventListener('click', () => {
   todoInput.value = '';
   saveTasks();
 });
-
-function updateClock() {
-  let now = new Date();
-  let hours = now.getHours();
-  let minutes = now.getMinutes();
-  let formattedHours = String(hours).padStart(2, '0');
-  let formattedMins = String(minutes).padStart(2, '0');
-  currentTime.textContent = formattedHours + ":" + formattedMins;
-  let formattedDate = now.toLocaleDateString('en-AU', { 
-    weekday: 'long', 
-    month: 'short', 
-    day: 'numeric' 
-  });
-  currentDate.textContent = formattedDate;
-}
-
-updateClock();
-setInterval(updateClock, 1000);
 
 gameButton.addEventListener('click', () => {
   gameButton.disabled = true;
@@ -213,56 +256,26 @@ lofiButton.addEventListener('click', () => {
   }
 })
 
-// Looping to randomly generate stars
-let stars = "";
-for (let i = 0; i < 50; i++) {
-  let x = Math.floor(Math.random() * window.innerWidth);
-  let y = Math.floor(Math.random() * window.innerHeight);
-  stars += `${x}px ${y}px #fff, `;
-}
-stars = stars.slice(0, -2);
-starField.style.boxShadow = stars;
-// Persistence for todo list
-function saveTasks() {
-  const tasks = [];
-  const items = document.querySelectorAll('li');
-
-  for (const item of items) {
-    tasks.push(item.firstChild.textContent);
-  }
-  localStorage.setItem('tasks', JSON.stringify(tasks))
-}
-
-function loadTasks() {
-  const taskList = JSON.parse(localStorage.getItem('tasks'));
-  for (const task of taskList) {
-    const li = document.createElement('li');
-    li.textContent= task;
-    const completeButton = document.createElement('button');
-    completeButton.textContent = "✓";
-    completeButton.addEventListener('click', () => {
-      li.classList.toggle('completed');
-      saveTasks();
-    });
-    
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = "✕";
-    deleteButton.addEventListener('click', () => {
-      li.remove();
-      saveTasks();
-    });
-    li.appendChild(completeButton);
-    li.appendChild(deleteButton);
-    todoList.appendChild(li);
-  }
-}
-
-loadTasks();
-
-
-// Persistence for notes
-notesSection.value = localStorage.getItem('notes')
-
 notesSection.addEventListener('input', () => {
   localStorage.setItem('notes', notesSection.value);
 });
+
+/* Initiations */
+// Load theme
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+  document.body.classList.add(savedTheme);
+}
+
+if (document.body.classList.contains('night-mode')) {
+  greeting.textContent = 'Time to rest and reset 😴';
+} else {
+  greeting.textContent = 'Lock In Time?';
+}
+
+// Load data and UI
+notesSection.value = localStorage.getItem('notes') || '';
+loadTasks();
+generateStars();
+updateClock();
+setInterval(updateClock, 1000);

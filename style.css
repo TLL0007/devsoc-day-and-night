@@ -147,6 +147,27 @@ body.night-mode .switch {
   transition: all 0.2s ease;
 }
 
+.item-button {
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 4px;
+}
+
+#todo-list {
+  list-style: none; 
+  padding: 0;
+}
+
+#todo-list li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 body.night-mode .button {
   border-color: #e8e8ff;
   color: #ffffff;
@@ -201,6 +222,7 @@ body.night-mode .button {
   right: 0.625rem;
   background: transparent;
   border: none;
+  cursor: pointer;
 }
 
 #prank-button img {
