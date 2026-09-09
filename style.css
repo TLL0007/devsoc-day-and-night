@@ -22,11 +22,6 @@ body.night-mode {
   initial-value: #fff8dc;
 }
 
-body.night-mode {
-  --bg-color: #311667;
-  --text-color: #f1f1f1;
-}
-
 body {
   background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
   color: var(--text-color);
@@ -83,8 +78,8 @@ h1, h2 {
 }
 
 .sun {
-  width: 120px;
-  height: 120px;
+  width: 7.5rem;
+  height: 7.5rem;
   background-color: #ffd700;
   border-radius: 50%;
   box-shadow: 0 0 60px rgba(255, 215, 0, 0.6); 
@@ -98,28 +93,28 @@ body.night-mode .sun {
 }
 
 .switch {
-  width: 80px;
-  height: 40px;
+  width: 5rem;
+  height: 2.5rem;
   border: 3px solid #2c3e50;
-  border-radius: 25px;
+  border-radius: 1.5625rem;
   background: transparent;
   cursor: pointer;
   position: relative;
 }
 
 .switch-thumb {
-  width: 26px;
-  height: 26px;
+  width: 1.625rem;
+  height: 1.625rem;
   background-color: #f39c12;
   border-radius: 50%;
   position: absolute;
-  top: 4px;
-  left: 4px;
+  top: 0.25rem;
+  left: 0.25rem;
   transition: transform 0.4s ease;
 }
 
 body.night-mode .switch-thumb {
-  transform: translateX(40px);
+  transform: translateX(2.5rem);
 }
 
 body.night-mode .switch {
@@ -144,8 +139,8 @@ body.night-mode .switch {
 .button {
   background: rgba(255, 255, 255, 0.2);
   border: 2px solid #2c3e50;
-  padding: 8px 16px;
-  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  border-radius: 1.25rem;
   font-family: inherit;
   color: #2c3e50;
   cursor: pointer;
@@ -165,12 +160,12 @@ body.night-mode .button {
 
 #clock-container {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 1.25rem;
+  right: 1.25rem;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  font-family: inherit; /* Matches your page font */
+  font-family: inherit;
 }
 
 #clock-time {
@@ -202,14 +197,14 @@ body.night-mode .button {
 
 #prank-button {
   position: fixed;
-  bottom: 10px;
-  right: 10px;
+  bottom: 0.625rem;
+  right: 0.625rem;
   background: transparent;
   border: none;
 }
 
 #prank-button img {
-  width: 50px; 
+  width: 3.125rem; 
 }
 
 #job-app {
@@ -237,6 +232,6 @@ body.night-mode .button {
 
 #footer {
   position: fixed;
-  bottom: 3px;
-  left: 5px;
+  bottom: 0.1875rem;
+  left: 0.3125rem;
 }
