@@ -99,12 +99,14 @@ function loadTasks() {
   }
   for (const task of taskList) {
     const li = document.createElement('li');
-    li.textContent= task;
+    const span = document.createElement('span');
+    span.textContent = task;
+    li.appendChild(span);
     const completeButton = document.createElement('button');
     completeButton.textContent = "✓";
     completeButton.classList.add('item-button');
     completeButton.addEventListener('click', () => {
-      li.classList.toggle('completed');
+      span.classList.toggle('completed');
       saveTasks();
     });
     
@@ -204,13 +206,15 @@ addTodoButton.addEventListener('click', () => {
     return;
   }
   const li = document.createElement('li');
-  li.textContent= taskText;
+  const span = document.createElement('span');
+  span.textContent = taskText;
+  li.appendChild(span);
 
   const completeButton = document.createElement('button');
   completeButton.textContent = "✓";
   completeButton.classList.add('item-button');
   completeButton.addEventListener('click', () => {
-    li.classList.toggle('completed')
+    span.classList.toggle('completed')
     saveTasks();
   })
   li.appendChild(completeButton);
